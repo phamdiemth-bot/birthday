@@ -124,6 +124,104 @@
     @media (prefers-reduced-motion: reduce) {
       *, *:before, *:after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
     }
+    
+/* PASSWORD SECTION */
+.password-container {
+    width: 90%;
+    max-width: 420px;
+    margin: 20px auto;
+    padding: 25px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid white;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(100, 160, 200, 0.15);
+    text-align: center;
+}
+
+.password-container h2 {
+    color: #649dc5;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 15px;
+}
+
+.password-question {
+    font-size: 19px;
+    font-weight: bold;
+    color: #548db8;
+    margin-bottom: 8px;
+}
+
+.password-description {
+    color: #8aaec8;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.password-input-group {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.password-input-group input {
+    width: 60%;
+    min-width: 0;
+    padding: 12px;
+    border: 2px solid #d5eafa;
+    border-radius: 15px;
+    outline: none;
+    text-align: center;
+    font-size: 15px;
+    color: #548db8;
+    background: white;
+}
+
+.password-input-group input:focus {
+    border-color: #91c9ed;
+}
+
+.password-input-group button {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 15px;
+    background: #91c9ed;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.password-input-group button:hover {
+    background: #72b4df;
+    transform: translateY(-2px);
+}
+
+.password-message {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #72a8ca;
+    min-height: 20px;
+}
+
+.password-message.error {
+    color: #dc91a9;
+}
+
+.password-message.success {
+    color: #72aa91;
+}
+
+@media (max-width: 480px) {
+    .password-input-group {
+        flex-direction: column;
+    }
+
+    .password-input-group input,
+    .password-input-group button {
+        width: 100%;
+    }
+}
   </style>
 </head>
 <body>
@@ -155,6 +253,34 @@
         <div class="eyebrow">A TINY FRIEND HAS SOMETHING FOR YOU</div>
         <h1 class="script" style="font-size:clamp(1.8rem,6vw,2.7rem)">Psst... A little message!</h1>
         <p class="subtitle">Someone has a little message for you.<br>Can you find it?</p>
+        
+<!-- SECRET PASSWORD SECTION -->
+<div class="password-container" id="passwordContainer">
+    <h2>A LITTLE QUESTION ♡</h2>
+
+    <p class="password-question">
+        When was our first date?
+    </p>
+
+    <p class="password-description">
+        Enter the secret password to unlock your letter ♡
+    </p>
+
+    <div class="password-input-group">
+        <input
+            type="password"
+            id="secretPassword"
+            placeholder="Enter password..."
+            maxlength="12"
+        >
+
+        <button onclick="checkPassword()">
+            UNLOCK ♡
+        </button>
+    </div>
+
+    <p id="passwordMessage" class="password-message"></p>
+</div>
         <button class="bunny-button" id="bunnyButton" type="button" aria-label="Chạm vào chú thỏ để mở lời nhắn">
           <div class="bunny" id="bunny">
             <div class="ear left"></div><div class="ear right"></div>
@@ -233,7 +359,69 @@
       envelope.classList.add('show');
       burstHearts();
     }
-    bunnyButton.addEventListener('click', revealEnvelope);
+
+// SECRET PASSWORD SYSTEM
+let passwordUnlocked = false;
+
+// Lock the bunny when Page 2 first opens
+bunnyButton.disabled = true;
+
+function checkPassword() {
+  const input = document.getElementById('secretPassword');
+  const message = document.getElementById('passwordMessage');
+  const unlockButton = document.getElementById('unlockButton');
+
+  if (input.value.trim() === '2007') {
+
+    passwordUnlocked = true;
+
+    message.textContent =
+      "Yay! You got it! Now tap the bunny! ♡";
+
+    message.className = 'password-message success';
+
+    // Unlock bunny
+    bunnyButton.disabled = false;
+    bunnyButton.style.opacity = '1';
+    bunnyButton.style.cursor = 'pointer';
+
+    // Lock password after successful entry
+    input.disabled = true;
+    unlockButton.disabled = true;
+    unlockButton.style.opacity = '.6';
+
+    burstHearts();
+
+  } else {
+
+    message.textContent =
+      "Oops! That's not quite right. Try again, my love! ♡";
+
+    message.className = 'password-message error';
+
+    input.value = '';
+    input.focus();
+  }
+}
+
+// Click UNLOCK
+document.getElementById('unlockButton')
+  .addEventListener('click', checkPassword);
+
+// Press Enter to unlock
+document.getElementById('secretPassword')
+  .addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      checkPassword();
+    }
+  });
+
+// Bunny interaction only after correct password
+bunnyButton.addEventListener('click', function() {
+  if (!passwordUnlocked) return;
+
+  revealEnvelope();
+});
     envelope.addEventListener('click', () => showPage(3));
     envelope.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPage(3); }
