@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#dff1ff" />
+  <title>A Little Piece of My Sky ♡</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Pacifico&display=swap');
+
+    :root {
+      --sky: #dff1ff;
+      --sky-deep: #c8e6fb;
+      --blue: #6398c2;
+      --blue-dark: #477da8;
+      --white: #fffdfb;
+      --pink: #f7c8d8;
+      --ink: #6486a4;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--ink);
+      background: var(--sky);
+      overflow-x: hidden;
+    }
+    button { font: inherit; }
+    .page {
+      min-height: 100svh;
+      display: none;
+      position: relative;
+      overflow: hidden;
+      padding: 28px 18px;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 22%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+        linear-gradient(145deg, #e9f6ff, #d7edff 55%, #eaf6ff);
+    }
+    .page.active { display: flex; animation: pageIn .75s ease both; }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .decor { position: absolute; pointer-events: none; user-select: none; opacity: .85; }
+    .cloud { width: 115px; height: 38px; border-radius: 50px; background: rgba(255,255,255,.82); filter: drop-shadow(0 7px 8px rgba(117,166,202,.10)); }
+    .cloud:before, .cloud:after { content:""; position:absolute; background:inherit; border-radius:50%; }
+    .cloud:before { width:52px; height:52px; left:18px; top:-23px; }
+    .cloud:after { width:65px; height:65px; right:13px; top:-31px; }
+    .cloud.one { top:13%; left:-20px; animation: drift 18s linear infinite; }
+    .cloud.two { bottom:13%; right:-25px; transform:scale(.8); animation: drift 22s linear infinite reverse; }
+    @keyframes drift { 50% { translate: 35px 8px; } }
+    .sparkle { color:#fff; font-size:22px; animation: twinkle 2.5s ease-in-out infinite; }
+    @keyframes twinkle { 50% { opacity:.35; transform:scale(.8) rotate(18deg); } }
+    .panel { width:min(100%, 620px); position:relative; z-index:2; text-align:center; }
+    .eyebrow { letter-spacing:2px; font-size:.75rem; font-weight:800; color:#80a9ca; }
+    h1 { color:var(--blue-dark); font-size:clamp(2rem, 7vw, 3.6rem); line-height:1.15; margin:12px 0; }
+    h2 { color:var(--blue-dark); margin:8px 0 14px; }
+    .script { font-family:'Pacifico', cursive; font-weight:400; }
+    .subtitle { font-size:1rem; line-height:1.7; color:#7699b8; margin:12px auto 24px; max-width:420px; }
+    .gift-wrap { margin:24px auto 18px; width:190px; height:170px; position:relative; display:grid; place-items:center; }
+    .gift { width:142px; height:105px; position:relative; margin-top:42px; border-radius:12px; background:#9dc9eb; box-shadow:0 15px 24px rgba(87,143,187,.18); }
+    .gift:before { content:""; position:absolute; width:25px; height:100%; left:calc(50% - 12px); background:#fff5f8; }
+    .gift:after { content:""; position:absolute; height:24px; width:158px; left:-8px; top:-19px; border-radius:8px; background:#f8d6e2; }
+    .bow { position:absolute; top:4px; left:50%; transform:translateX(-50%); width:80px; height:44px; z-index:2; }
+    .bow:before,.bow:after { content:""; position:absolute; width:37px; height:27px; border:7px solid #f7c8d8; border-radius:80% 80% 20% 80%; }
+    .bow:before { left:2px; transform:rotate(25deg); }
+    .bow:after { right:2px; transform:scaleX(-1) rotate(25deg); }
+    .bow span { position:absolute; width:18px; height:18px; border-radius:50%; background:#f7c8d8; left:31px; top:13px; }
+    .btn {
+      border:0; cursor:pointer; border-radius:999px; padding:13px 25px; color:#fff;
+      background:linear-gradient(135deg,#83b7df,#659bc7); box-shadow:0 8px 18px rgba(89,145,190,.2);
+      font-weight:800; transition:transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform:translateY(-3px); box-shadow:0 12px 22px rgba(89,145,190,.25); }
+    .btn:active { transform:scale(.97); }
+    .bunny-button { border:0; background:transparent; cursor:pointer; display:block; margin:8px auto 12px; padding:10px; }
+    .bunny { position:relative; width:190px; height:190px; margin:auto; transition:transform .35s; filter:drop-shadow(0 12px 10px rgba(90,142,180,.13)); }
+    .bunny-button:hover .bunny { transform:translateY(-7px) rotate(-3deg); }
+    .bunny .body { position:absolute; width:132px; height:116px; background:#fff; border-radius:48% 48% 45% 45%; left:29px; bottom:5px; }
+    .bunny .ear { position:absolute; width:43px; height:105px; background:#fff; border-radius:50%; top:0; }
+    .bunny .ear:after { content:""; position:absolute; inset:12px 12px 13px; border-radius:50%; background:#f6d8e3; }
+    .bunny .ear.left { left:43px; transform:rotate(-13deg); }
+    .bunny .ear.right { right:43px; transform:rotate(13deg); }
+    .bunny .head { position:absolute; width:145px; height:125px; background:#fff; border-radius:50%; left:22px; top:42px; }
+    .eye { position:absolute; width:8px; height:11px; background:#718da6; border-radius:50%; top:57px; }
+    .eye.left { left:43px; } .eye.right { right:43px; }
+    .cheek { position:absolute; width:23px; height:12px; border-radius:50%; background:#f8cbd9; top:76px; opacity:.8; }
+    .cheek.left { left:19px; } .cheek.right { right:19px; }
+    .nose { position:absolute; width:10px; height:8px; background:#e9aebe; border-radius:50% 50% 55% 55%; top:76px; left:68px; }
+    .mouth { position:absolute; top:82px; left:69px; width:9px; height:8px; border-bottom:2px solid #9b9aaa; border-radius:50%; }
+    .heart { position:absolute; right:-1px; bottom:19px; font-size:42px; transform:rotate(12deg); }
+    .bunny.bounce { animation:bounce .7s ease; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 35%{transform:translateY(-25px) rotate(5deg)} 65%{transform:translateY(0) rotate(-4deg)} }
+    .hint { color:#80a5c4; font-size:.9rem; }
+    .envelope { display:none; margin:18px auto 0; width:180px; cursor:pointer; animation:pop .5s ease both; }
+    .envelope.show { display:block; }
+    .envelope-shape { height:112px; background:#fffafc; border:2px solid #f5d9e4; border-radius:10px; position:relative; box-shadow:0 10px 20px rgba(91,142,180,.13); }
+    .envelope-shape:before { content:""; position:absolute; left:0; top:0; border-left:88px solid transparent; border-right:88px solid transparent; border-top:65px solid #f8dce7; }
+    .envelope-label { position:absolute; z-index:1; top:67px; width:100%; font-family:'Pacifico',cursive; color:#729fc5; }
+    @keyframes pop { from{opacity:0; transform:scale(.7)} to{opacity:1; transform:scale(1)} }
+    .letter-panel { width:min(100%,720px); text-align:left; position:relative; z-index:2; }
+    .letter {
+      background:rgba(255,255,255,.94); border:1px solid #f5e5eb; border-radius:22px;
+      box-shadow:0 18px 45px rgba(92,145,184,.16); padding:clamp(22px,5vw,42px);
+      max-height:76svh; overflow-y:auto; scrollbar-color:#c5e1f5 transparent;
+    }
+    .letter-top { text-align:center; color:#8bb0d0; letter-spacing:1.6px; font-size:.72rem; font-weight:800; }
+    .letter h2 { font-family:'Pacifico',cursive; font-size:1.7rem; font-weight:400; text-align:left; margin:22px 0; }
+    .letter p { color:#6888a5; font-size:1rem; line-height:1.9; margin:0 0 15px; white-space:normal; }
+    .letter .signoff { color:#5688b2; font-family:'Pacifico',cursive; font-size:1.25rem; margin-top:22px; }
+    .letter-footer { text-align:center; padding-top:18px; color:#8aaccb; font-size:.85rem; }
+    .footer-bunny { font-size:42px; display:block; margin:8px; }
+    .nav { display:flex; justify-content:center; gap:10px; margin-top:17px; }
+    .btn.secondary { background:rgba(255,255,255,.75); color:#6794b8; box-shadow:none; border:1px solid #c8e1f4; }
+    .music { position:fixed; z-index:10; right:14px; top:14px; border:1px solid #c5e0f4; background:rgba(255,255,255,.8); color:#6794b8; border-radius:30px; padding:9px 13px; font-size:.8rem; cursor:pointer; }
+    .music small { opacity:.8; }
+    .tiny-note { margin-top:14px; font-size:.72rem; color:#91afc9; }
+    @media (max-width:480px) {
+      .page { padding:22px 15px; }
+      .letter { max-height:72svh; }
+      .letter p { font-size:.95rem; }
+      .bunny { transform:scale(.9); margin-top:-5px; margin-bottom:-5px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <button class="music" id="musicButton" type="button" aria-label="Bật hoặc tắt nhạc">♫ Music: off</button>
+
+  <main>
+    <section class="page active" id="page1" aria-label="Birthday cover">
+      <div class="decor cloud one"></div><div class="decor cloud two"></div>
+      <span class="decor sparkle" style="top:17%;right:17%">✧</span>
+      <span class="decor sparkle" style="bottom:20%;left:13%;animation-delay:.8s">✦</span>
+      <span class="decor" style="top:28%;left:12%;font-size:23px">♡</span>
+      <span class="decor" style="bottom:25%;right:13%;font-size:20px">♡</span>
+      <div class="panel">
+        <div class="eyebrow">A LITTLE SURPRISE FOR YOU ♡</div>
+        <h1 class="script">Happy Birthday,<br>My Love!</h1>
+        <div class="gift-wrap" aria-hidden="true"><div class="bow"><span></span></div><div class="gift"></div></div>
+        <p class="subtitle">Today is all about you.<br>I made something special just for you.</p>
+        <button class="btn" onclick="showPage(2)">Open your surprise ♡</button>
+        <div class="tiny-note">made with love, just for you</div>
+      </div>
+    </section>
+
+    <section class="page" id="page2" aria-label="Little bunny surprise">
+      <div class="decor cloud one"></div><div class="decor cloud two"></div>
+      <span class="decor sparkle" style="top:15%;left:18%">✧</span>
+      <span class="decor sparkle" style="top:24%;right:15%;animation-delay:1s">✦</span>
+      <span class="decor" style="bottom:18%;left:15%;font-size:25px">♡</span>
+      <div class="panel">
+        <div class="eyebrow">A TINY FRIEND HAS SOMETHING FOR YOU</div>
+        <h1 class="script" style="font-size:clamp(1.8rem,6vw,2.7rem)">Psst... A little message!</h1>
+        <p class="subtitle">Someone has a little message for you.<br>Can you find it?</p>
+        <button class="bunny-button" id="bunnyButton" type="button" aria-label="Chạm vào chú thỏ để mở lời nhắn">
+          <div class="bunny" id="bunny">
+            <div class="ear left"></div><div class="ear right"></div>
+            <div class="body"></div>
+            <div class="head">
+              <span class="eye left"></span><span class="eye right"></span>
+              <span class="cheek left"></span><span class="cheek right"></span>
+              <span class="nose"></span><span class="mouth"></span>
+            </div>
+            <span class="heart">💙</span>
+          </div>
+        </button>
+        <p class="hint" id="bunnyHint">Tap the bunny to discover your surprise ♡</p>
+        <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Mở phong thư">
+          <div class="envelope-shape"><div class="envelope-label">For you ♡</div></div>
+          <p class="hint">Tap to open your letter</p>
+        </div>
+        <div class="nav"><button class="btn secondary" onclick="showPage(1)">← Back</button></div>
+      </div>
+    </section>
+
+    <section class="page" id="page3" aria-label="Birthday letter">
+      <div class="decor cloud one"></div><div class="decor cloud two"></div>
+      <span class="decor sparkle" style="top:10%;left:9%">✧</span>
+      <span class="decor sparkle" style="bottom:12%;right:9%">✦</span>
+      <div class="letter-panel">
+        <div class="letter">
+          <div class="letter-top">♡ A LETTER FROM MY HEART ♡</div>
+          <h2>To my love,</h2>
+          <p>Chúc mừng sinh nhật ăm chã iu của em.</p>
+          <p>Em chúc chồng iu tuổi mới hạnh phúc, luôn vui vẻ, yêu em và bớt nghĩ nhiều lại nhé.</p>
+          <p>Năm nay em không được đón sinh nhật cùng anh em cũng buồn lắm, cũng có nhiều chuyện xảy ra nhưng mà đến giờ anh vẫn ở đây và yêu em nhiều như vậy, em hạnh phúc lắm.</p>
+          <p>Em không phải là người giỏi bày tỏ tình cảm nên đôi khi anh sẽ thấy em khô khan lạnh nhạt nhưng mà anh ơi em yêu anh nhiều lắm đó 💗</p>
+          <p>Anh yêu em và cho em tất cả những điều tốt nhất nhưng mà cũng góp ý cho em để tốt hơn từng ngày, đấy là điều em trân trọng và thích nhất trong mối quan hệ này- là chúng ta trưởng thành cùng nhau.</p>
+          <p>Tuổi 22 sắp tới với anh sẽ là một hành trình mới, em mong mọi điều thuận lợi sẽ đến với anh. Anh cũng đừng áp lực quá nhé vì đối với em anh đã siêu cấp giỏi ơi là giỏi gòi 💗</p>
+          <p>Anh là điều tuyệt vời nhất mà em có được ở tuổi 21 đó nên là anh không được buồn đâu.</p>
+          <p>Em sẽ luôn ở đây và yêu anh nhiều hơn từng ngày.</p>
+          <p class="signoff">I love you so much 💗</p>
+          <div class="letter-footer">
+            <span class="footer-bunny">🐰 🎂</span>
+            Forever your little girl ♡<br>
+            <span style="font-size:.75rem">Made with all my love, just for you.</span><br>
+            <span style="font-size:.62rem">Music: <a href="https://orangefreesounds.com/happy-birthday-instrumental/" target="_blank" rel="noopener" style="color:#91afc9">Happy Birthday Instrumental</a> by Alexander · CC BY 4.0</span>
+          </div>
+        </div>
+        <div class="nav">
+          <button class="btn secondary" onclick="showPage(2)">← Back</button>
+          <button class="btn" onclick="sendHearts()">Send more love ♡</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Gentle Happy Birthday instrumental. Starts only after the visitor taps the music button. -->
+  <audio id="backgroundMusic"
+         src="https://orangefreesounds.com/wp-content/uploads/2016/08/Happy-birthday-instrumental.mp3"
+         loop preload="none"></audio>
+
+  <script>
+    function showPage(number) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById('page' + number).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const bunnyButton = document.getElementById('bunnyButton');
+    const bunny = document.getElementById('bunny');
+    const envelope = document.getElementById('envelope');
+    const bunnyHint = document.getElementById('bunnyHint');
+
+    function revealEnvelope() {
+      bunny.classList.remove('bounce');
+      void bunny.offsetWidth;
+      bunny.classList.add('bounce');
+      bunnyHint.textContent = 'Yay! Your little letter is here ♡';
+      envelope.classList.add('show');
+      burstHearts();
+    }
+    bunnyButton.addEventListener('click', revealEnvelope);
+    envelope.addEventListener('click', () => showPage(3));
+    envelope.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showPage(3); }
+    });
+
+    function burstHearts() {
+      const page = document.getElementById('page2');
+      const symbols = ['♡','💗','✦','♥'];
+      for (let i = 0; i < 14; i++) {
+        const heart = document.createElement('span');
+        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        heart.style.cssText = `position:absolute;z-index:5;left:${15 + Math.random()*70}%;top:${35 + Math.random()*35}%;font-size:${14 + Math.random()*18}px;color:#f1aeca;pointer-events:none;animation:floatUp 1.8s ease-out forwards;`;
+        page.appendChild(heart);
+        setTimeout(() => heart.remove(), 1900);
+      }
+    }
+    function sendHearts() {
+      const page = document.getElementById('page3');
+      for (let i = 0; i < 18; i++) {
+        const heart = document.createElement('span');
+        heart.textContent = ['💗','♡','💙'][Math.floor(Math.random()*3)];
+        heart.style.cssText = `position:absolute;z-index:5;left:${5+Math.random()*90}%;bottom:5%;font-size:${14+Math.random()*16}px;pointer-events:none;animation:floatUp 2.4s ease-out forwards;`;
+        page.appendChild(heart);
+        setTimeout(() => heart.remove(), 2500);
+      }
+    }
+    const style = document.createElement('style');
+    style.textContent = '@keyframes floatUp { to { transform:translateY(-180px) rotate(25deg); opacity:0; } }';
+    document.head.appendChild(style);
+
+    const music = document.getElementById('backgroundMusic');
+    const musicButton = document.getElementById('musicButton');
+    music.volume = 0.22;
+    let musicOn = false;
+    musicButton.addEventListener('click', async () => {
+      if (!musicOn) {
+        try {
+          await music.play();
+          musicOn = true;
+          musicButton.textContent = '♫ Music: on';
+        } catch (error) {
+          musicButton.textContent = 'Music unavailable ♡';
+          alert('Không tải được nhạc lúc này. Hãy kiểm tra kết nối Internet rồi thử lại nhé!');
+        }
+      } else {
+        music.pause();
+        musicOn = false;
+        musicButton.textContent = '♫ Music: off';
+      }
+    });
+  </script>
+</body>
+</html>
